@@ -39,7 +39,7 @@ function NavBar() {
     >
       <Container>
          <div className="d-flex align-items-center w-100">
-        <Navbar.Brand href="/" className="d-flex">
+        <Navbar.Brand href="https://monukumar89.github.io/portfolio/" className="d-flex">
           <h1 className="logo">Mk.</h1>
         </Navbar.Brand>
         <Navbar.Toggle
