@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/portfolio/static/css/main.33f4b7ea.css",
-    "main.js": "/portfolio/static/js/main.c91d3f51.js",
+    "main.js": "/portfolio/static/js/main.03622faf.js",
     "static/js/415.4d6acbeb.chunk.js": "/portfolio/static/js/415.4d6acbeb.chunk.js",
     "static/js/787.1ed0c42c.chunk.js": "/portfolio/static/js/787.1ed0c42c.chunk.js",
     "static/media/Monu_Kumar_Resume_1.pdf": "/portfolio/static/media/Monu_Kumar_Resume_1.cd6e0302f22829d986d3.pdf",
@@ -12,12 +12,12 @@
     "static/media/pre.svg": "/portfolio/static/media/pre.4410c5baaa673cc131da.svg",
     "index.html": "/portfolio/index.html",
     "main.33f4b7ea.css.map": "/portfolio/static/css/main.33f4b7ea.css.map",
-    "main.c91d3f51.js.map": "/portfolio/static/js/main.c91d3f51.js.map",
+    "main.03622faf.js.map": "/portfolio/static/js/main.03622faf.js.map",
     "415.4d6acbeb.chunk.js.map": "/portfolio/static/js/415.4d6acbeb.chunk.js.map",
     "787.1ed0c42c.chunk.js.map": "/portfolio/static/js/787.1ed0c42c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.33f4b7ea.css",
-    "static/js/main.c91d3f51.js"
+    "static/js/main.03622faf.js"
   ]
 }
