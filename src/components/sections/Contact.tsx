@@ -1,10 +1,30 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import { submitContactForm } from "@/app/actions/contact";
 
 const Contact = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [feedback, setFeedback] = useState<{ success: boolean; message: string } | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setFeedback(null);
+
+    const formData = new FormData(e.currentTarget);
+    const result = await submitContactForm(formData);
+
+    setFeedback(result);
+    setIsSubmitting(false);
+
+    if (result.success) {
+      (e.target as HTMLFormElement).reset();
+    }
+  };
+
   return (
     <section id="contact">
       <div className="container">
@@ -69,11 +89,11 @@ const Contact = () => {
             className="glass"
             style={{ padding: "3rem", borderRadius: "30px" }}
           >
-            <form style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                   <label style={{ fontSize: "0.8rem", color: "var(--text-secondary)" }}>Name</label>
-                  <input type="text" className="glass" style={{ 
+                  <input name="name" type="text" className="glass" required style={{ 
                     padding: "1rem", 
                     borderRadius: "12px", 
                     border: "none", 
@@ -83,7 +103,7 @@ const Contact = () => {
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                   <label style={{ fontSize: "0.8rem", color: "var(--text-secondary)" }}>Email</label>
-                  <input type="email" className="glass" style={{ 
+                  <input name="email" type="email" className="glass" required style={{ 
                     padding: "1rem", 
                     borderRadius: "12px", 
                     border: "none", 
@@ -94,7 +114,7 @@ const Contact = () => {
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 <label style={{ fontSize: "0.8rem", color: "var(--text-secondary)" }}>Message</label>
-                <textarea className="glass" rows={4} style={{ 
+                <textarea name="message" className="glass" rows={4} required style={{ 
                   padding: "1rem", 
                   borderRadius: "12px", 
                   border: "none", 
@@ -103,8 +123,26 @@ const Contact = () => {
                   resize: "none"
                 }} placeholder="Your message here..." />
               </div>
+              
+              {feedback && (
+                <div style={{ 
+                  padding: "1rem", 
+                  borderRadius: "12px", 
+                  background: feedback.success ? "rgba(16, 185, 129, 0.1)" : "rgba(239, 68, 68, 0.1)",
+                  color: feedback.success ? "var(--accent)" : "#ef4444",
+                  fontSize: "0.9rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem"
+                }}>
+                  {feedback.success ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}
+                  {feedback.message}
+                </div>
+              )}
+
               <button 
-                type="button" 
+                type="submit" 
+                disabled={isSubmitting}
                 className="glass"
                 style={{
                   padding: "1rem",
@@ -117,16 +155,28 @@ const Contact = () => {
                   justifyContent: "center",
                   gap: "0.5rem",
                   border: "none",
-                  cursor: "pointer",
-                  marginTop: "1rem"
+                  cursor: isSubmitting ? "not-allowed" : "pointer",
+                  marginTop: "1rem",
+                  opacity: isSubmitting ? 0.7 : 1
                 }}
               >
-                Send Message <Send size={18} />
+                {isSubmitting ? (
+                  <>Sending... <Loader2 className="reveal" style={{ animation: "spin 1s linear infinite" }} size={18} /></>
+                ) : (
+                  <>Send Message <Send size={18} /></>
+                )}
               </button>
             </form>
           </motion.div>
         </div>
       </div>
+      
+      <style jsx>{`
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
     </section>
   );
 };
